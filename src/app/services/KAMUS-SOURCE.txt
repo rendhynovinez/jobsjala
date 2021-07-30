@@ -1,0 +1,7 @@
+//PERINTAH SOURCE
+
+//MEMBUAT SERVICE
+//ionic g service allservice 
+
+//MEMBUAT PROVIDE
+//ionic g provide biodata

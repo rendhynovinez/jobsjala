@@ -1,0 +1,74 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"> </ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="header">
+      <h1>Edit Your Profile</h1>
+  </div>
+  <form id="form" [formGroup] = "MyProfileForm" (ngSubmit) = "submit()">
+    <ion-input formControlName="id" inputmode="text"  [(ngModel)]="userData.id" type="hidden"></ion-input>
+    <ion-item class="ion-margin-bottom">
+      <ion-input formControlName="fullname" inputmode="text"  [(ngModel)]="userData.fullname" placeholder="Full Name"></ion-input>
+  </ion-item>
+
+  <ion-item class="ion-margin-bottom">
+    <ion-datetime formControlName="dateofbirth" [(ngModel)]="userData.dateofbirth"  displayFormat="YYYY-MM-DD" min="1955-01-01"  placeholder="Date Of Birth" display-timezone="utc"></ion-datetime>
+  </ion-item>
+  <ion-item  class="ion-margin-bottom">
+      <ion-label>Gender</ion-label>
+      <ion-select [(ngModel)]="selectedGender" formControlName="gender"  ok-text="Ok" cancel-text="Cancel">
+        <ion-select-option  [(value)]="itemgenders.id" *ngFor="let itemgenders of genders">{{itemgenders.name}}</ion-select-option>
+      </ion-select>
+  </ion-item>
+  <ion-item class="ion-margin-bottom">
+    <ion-input formControlName="phonenumber" [(ngModel)]="userData.phonenumber" type="number" placeholder="Phone Number"></ion-input>
+  </ion-item>
+  <ion-item class="ion-margin-bottom">
+      <ion-label>Etnics</ion-label>
+      <ion-select formControlName="etnics" [(ngModel)]="selectedetnics" ok-text="Ok" cancel-text="Cancel">
+        <ion-select-option [(value)]="itemEtnic.id" *ngFor="let itemEtnic of listEtnics">{{itemEtnic.name}}</ion-select-option>
+      </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-textarea rows="3" cols="20" formControlName="address" [(ngModel)]="userData.address" placeholder="Address"></ion-textarea>
+  </ion-item>
+  <ion-item class="ion-margin-bottom">
+      <ion-label>Live In Area</ion-label>
+      <ion-select  formControlName="LiveInArea" [(ngModel)]="selectedLiveInArea" ok-text="Ok" cancel-text="Cancel">
+        <ion-select-option [(value)]="itemArea.id" *ngFor="let itemArea of liveinarea">{{itemArea.name}}</ion-select-option>
+      </ion-select>
+  </ion-item>
+  <ion-item>
+      <ion-label>Education</ion-label>
+      <ion-select formControlName="Education"  [(ngModel)]="selectedEducation" ok-text="Ok" cancel-text="Cancel">
+        <ion-select-option [(value)]="itemEdu.id" *ngFor="let itemEdu of listEducation">{{itemEdu.name}}</ion-select-option>
+      </ion-select>
+  </ion-item>
+  <ion-item class="ion-margin-bottom">
+      <ion-input formControlName="Organization" [(ngModel)]="userData.Organization" inputmode="text" placeholder="Organization"></ion-input>
+  </ion-item>
+  <ion-item  class="ion-margin-bottom">
+      <ion-label>Your Job Specialist</ion-label>
+      <ion-select  formControlName="JobSpecialist" [(ngModel)]="selectedJobSpecialist" ok-text="Ok" cancel-text="Cancel">
+        <ion-select-option [(value)]="itemJobSpecialist.id" *ngFor="let itemJobSpecialist of listjobspecialist">{{itemJobSpecialist.name}}</ion-select-option>
+      </ion-select>
+  </ion-item>
+    <!-- <ion-item class="ion-margin-bottom">
+      <ion-input  type="file"></ion-input>
+    </ion-item> -->
+  <ion-item>
+      <ion-textarea rows="6" cols="20"  formControlName="Skills" [(ngModel)]="userData.Skills"  placeholder="Skills"></ion-textarea>
+  </ion-item>
+    <ion-button  [disabled]="!MyProfileForm.valid" [color]="!MyProfileForm.valid? 'medium':'warning'"  type="submit"  expand="block" shape="round">
+      Save Data
+    </ion-button>
+</form>
+  <p>Editing will change the contents of the data.</p>
+</ion-content>

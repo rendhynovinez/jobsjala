@@ -1,0 +1,22 @@
+ion-menu {
+    --ion-background-color: #fffdf0;
+    --ion-text-color:  rgba(16,61,90,255);
+  
+  
+    ion-toolbar {
+      --background: rgba(16,61,90,255);
+      --ion-text-color:  #fffdf0;
+    }
+  
+    ion-list {/* optional, but it needs when you use gradient as a background color.*/
+      background: transparent;
+      font-weight: bold;
+    }
+  }
+
+  ion-menu{
+    --width	:60%;
+  
+   
+  }
+

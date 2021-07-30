@@ -1,0 +1,143 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary">
+        <ion-icon routerLink="/login" slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <!-- <ion-button routerLink="/simpan">Keluar</ion-button> -->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="header">
+      <h1>My Profile</h1>
+  </div>
+  <form id="form" [formGroup] = "BiodataForm" (ngSubmit) = "submit()">
+     
+      <ion-item class="ion-margin-bottom">
+          <ion-input formControlName="fullname" inputmode="text" placeholder="Full Name"></ion-input>
+          <div *ngFor="let error of errorMessages.fullname">
+            <ng-container *ngIf="fullname.hasError(error.type) && (fullname.dirty || fullname.touched)">
+              <small class="error-message">{{error.message}}</small>
+            </ng-container>
+          </div>
+      </ion-item>
+
+      <ion-item class="ion-margin-bottom">
+        <!-- <ion-input formControlName="dateofbirth" inputmode="text" placeholder="Date Of Birth"></ion-input> -->
+        <ion-datetime formControlName="dateofbirth"  displayFormat="YYYY-MM-DD" min="1955-01-01"  placeholder="Date Of Birth" display-timezone="utc"></ion-datetime>
+        <div *ngFor="let error of errorMessages.dateofbirth">
+          <ng-container *ngIf="dateofbirth.hasError(error.type) && (dateofbirth.dirty || dateofbirth.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+    </ion-item>
+
+    <ion-item  class="ion-margin-bottom">
+      <ion-label>Gender</ion-label>
+      <ion-select formControlName="gender" ok-text="Ok" cancel-text="Cancel">
+        <ion-select-option value="1">Male</ion-select-option>
+        <ion-select-option value="2">Female</ion-select-option>
+      </ion-select>
+      <div *ngFor="let error of errorMessages.gender">
+        <ng-container *ngIf="gender.hasError(error.type) && (gender.dirty || gender.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+    </ion-item>
+
+    <ion-item class="ion-margin-bottom">
+      <ion-input formControlName="phonenumber" type="number" placeholder="Phone Number"></ion-input>
+      <div *ngFor="let error of errorMessages.phonenumber">
+        <ng-container *ngIf="phonenumber.hasError(error.type) && (phonenumber.dirty || phonenumber.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+    </ion-item>
+
+    <ion-item class="ion-margin-bottom">
+      <ion-label>Etnics</ion-label>
+      <ion-select formControlName="etnics" ok-text="Ok" cancel-text="Cancel">
+        <ion-select-option [(value)]="itemEtnic.id" *ngFor="let itemEtnic of listEtnics">{{itemEtnic.name}}</ion-select-option>
+      </ion-select>
+      <div *ngFor="let error of errorMessages.etnics">
+        <ng-container *ngIf="etnics.hasError(error.type) && (etnics.dirty || etnics.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+    </ion-item >
+     <ion-item>
+      <ion-textarea formControlName="address" rows="3" cols="20" placeholder="Address"></ion-textarea>
+      <div *ngFor="let error of errorMessages.address">
+        <ng-container *ngIf="address.hasError(error.type) && (address.dirty || address.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+     </ion-item>
+     <ion-item class="ion-margin-bottom">
+      <ion-label>Live In Area</ion-label>
+      <ion-select formControlName="LiveInArea" ok-text="Ok" cancel-text="Cancel">
+        <ion-select-option [(value)]="itemArea.id" *ngFor="let itemArea of liveinarea">{{itemArea.name}}</ion-select-option>
+      </ion-select>
+      <div *ngFor="let error of errorMessages.LiveInArea">
+        <ng-container *ngIf="LiveInArea.hasError(error.type) && (LiveInArea.dirty || LiveInArea.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Education</ion-label>
+      <ion-select formControlName="Education" ok-text="Ok" cancel-text="Cancel">
+        <ion-select-option [(value)]="itemEdu.id" *ngFor="let itemEdu of listEducation">{{itemEdu.name}}</ion-select-option>
+      </ion-select>
+      <div *ngFor="let error of errorMessages.Education">
+        <ng-container *ngIf="Education.hasError(error.type) && (Education.dirty || Education.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+    </ion-item>
+    <ion-item class="ion-margin-bottom">
+      <ion-input formControlName="Organization" inputmode="text" placeholder="Organization"></ion-input>
+      <div *ngFor="let error of errorMessages.Organization">
+        <ng-container *ngIf="Organization.hasError(error.type) && (Organization.dirty || Organization.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+    </ion-item>
+    <ion-item class="ion-margin-bottom">
+      <ion-label>Your Job Specialist</ion-label>
+      <ion-select formControlName="JobSpecialist" ok-text="Ok" cancel-text="Cancel">
+        <ion-select-option [(value)]="itemJobSpecialist.id" *ngFor="let itemJobSpecialist of listjobspecialist">{{itemJobSpecialist.name}}</ion-select-option>
+      </ion-select>
+      <div *ngFor="let error of errorMessages.JobSpecialist">
+        <ng-container *ngIf="JobSpecialist.hasError(error.type) && (JobSpecialist.dirty || JobSpecialist.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+    </ion-item>
+
+    <!-- <ion-item>
+     <ion-label>Attach Your CV</ion-label>
+     </ion-item>
+      <ion-item class="ion-margin-bottom">
+     
+        <ion-input  type="file"></ion-input>
+      </ion-item> -->
+      <ion-item>
+        <ion-textarea formControlName="Skills" rows="6" cols="20" placeholder="Skills"></ion-textarea>
+        <div *ngFor="let error of errorMessages.Skills">
+          <ng-container *ngIf="Skills.hasError(error.type) && (Skills.dirty || Skills.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+      </ion-item>
+      
+      <ion-button  [disabled]="!BiodataForm.valid" [color]="!BiodataForm.valid? 'medium':'warning'"  type="submit"  expand="block" shape="round">
+        Save Data
+      </ion-button>
+  </form>
+  <p>Make sure the data you input for the job is correct.</p>
+</ion-content>

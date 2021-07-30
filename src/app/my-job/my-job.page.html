@@ -1,0 +1,34 @@
+<ion-header [translucent] ="true">
+  <ion-toolbar>
+    <ion-title>My Job</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"> </ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen] ="true">
+  <ion-card *ngFor="let item of jobList" (click)="OpenDetail(item)">
+      <ion-card-header>
+            <ion-card-subtittle [style.color] = "item.itemStatusApply === 'Complete' ? 'green' : (item.itemStatusApply === 'Interview' ? 'red' : 'grey' )">
+               <b>{{item.itemTitle}}</b>
+            </ion-card-subtittle>
+          <ion-card-title>{{item.itemCompany}}</ion-card-title>
+      </ion-card-header>
+      <ion-item>
+        <ion-icon *ngIf="item.itemStatusApply === 'Complete' " color="success" size="small" name="ellipse"></ion-icon>
+        <ion-icon *ngIf="item.itemStatusApply === 'Interview' " color="danger" size="small" name="ellipse"></ion-icon>
+        <ion-icon *ngIf="item.itemStatusApply === 'On-Review' " color="warning" size="small" name="ellipse"></ion-icon>
+        <ion-icon *ngIf="item.itemStatusApply === 'Unsuitable' " color="primary" size="small" name="ellipse"></ion-icon>
+        <ion-label style="margin: left 5px;" [style.color] = "item.itemStatusApply === 'Interview' ? 'green' : (item.itemStatusApply === 'Unsuitable' ? 'red' : 'grey' )">
+            <b >{{item.itemStatusApply}}</b>
+        </ion-label>
+      </ion-item>
+      <ion-card-content>
+        <ion-icon name="calendar"></ion-icon>
+        <ion-label style="margin: left 5px;">
+          Sent On :2021-01-01
+      </ion-label>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

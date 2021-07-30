@@ -1,0 +1,41 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/signup">Sign-Up</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="header">
+      <h1 style="font-family: Arial, Helvetica, sans-serif; color: rgb(112, 99, 99);">Login</h1>
+      <img src="./assets/logo.jpeg"/>
+  </div>
+  <form id="form" [formGroup] = "LoginForm">
+    <ion-item class="ion-margin-bottom">
+      <ion-input formControlName="email" placeholder="email" name="email" type="email" formControlName="email" [(ngModel)] = "postData.email"></ion-input>
+        <div *ngFor="let error of errorMessages.email">
+          <ng-container *ngIf="email.hasError(error.type) && (email.dirty || email.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+    </ion-item>
+    <ion-item class="ion-margin-bottom">
+      <ion-input formControlName="password" type="password" name="password" placeholder="password" [(ngModel)] = "postData.password"></ion-input>
+      <div *ngFor="let error of errorMessages.password">
+        <ng-container *ngIf="password.hasError(error.type) && (password.dirty || password.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+    </ion-item>
+      <!-- <ion-button routerLink="/biodata" [disabled]="!LoginForm.valid" [color]="!LoginForm.valid?'medium' : 'warning'" expand="block" shape="round" > -->
+        <ion-button (click)="loginAction()" [disabled]="!LoginForm.valid" [color]="!LoginForm.valid?'medium' : 'warning'" expand="block" shape="round" >
+        Login
+      </ion-button>
+  </form>
+</ion-content>

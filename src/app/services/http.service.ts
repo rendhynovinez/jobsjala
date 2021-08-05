@@ -20,12 +20,19 @@ export class HttpService {
    }
  
   post(serviceName : string, data:any){
+ 
+
+    let tokens = this.token.__zone_symbol__value;
+
+    if(tokens === null){
+       tokens = localStorage.getItem(AuthConstants.AUTH);
+    }
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type':'application/json',
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods" : "POST",  
-      'Authorization':'Bearer '+ this.token.__zone_symbol__value
+      'Authorization':'Bearer '+ tokens
     });
     
     const options = {headers : headers, withCredentials : true};
@@ -36,12 +43,19 @@ export class HttpService {
   }
 
   get(serviceName : string){
+
+    let tokens = this.token.__zone_symbol__value;
+
+    if(tokens === null){
+       tokens = localStorage.getItem(AuthConstants.AUTH);
+    }
+
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type':'application/json',
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods" : "GET",  
-      'Authorization':'Bearer '+ this.token.__zone_symbol__value
+      'Authorization':'Bearer '+ tokens
     });
 
     const options = {headers : headers, withCredentials : true};
@@ -53,6 +67,12 @@ export class HttpService {
 
   put(serviceName : string, data:any){
 
+    let tokens = this.token.__zone_symbol__value;
+
+    if(tokens === null){
+       tokens = localStorage.getItem(AuthConstants.AUTH);
+    }
+    
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type':'application/json',

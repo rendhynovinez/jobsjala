@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 import { AuthConstants } from '../config/auth-constants';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
@@ -18,7 +19,8 @@ export class SignupPage implements OnInit {
     private authService:AuthService,
     private storageService:StorageService,
     private router:Router,
-    private toastService:ToastService
+    private toastService:ToastService,
+    private LoadingController:LoadingController
     ) { }
 
   postData = {
@@ -28,9 +30,17 @@ export class SignupPage implements OnInit {
     password_confirmation: ''
   }
 
+  async presentLoading(message :string) {
+    const loading = await this.LoadingController.create({
+      message
+    });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }
+
  
   signupAction(){
-    debugger
     this.authService.signup(this.SignUpForm.value).subscribe((res:any)=>{
       if(res){
         this.storageService.store(AuthConstants.AUTH, res.success.token);
@@ -38,10 +48,10 @@ export class SignupPage implements OnInit {
       }else{
         this.toastService.presentToast('kesalahan yang tak diduga');
       }
-    }),
-    (error, any) => {
-      this.toastService.presentToast('Connection Error');
-    }
+    },async (error) => {
+      this.toastService.presentToast('email and users already exist');
+      this.LoadingController.dismiss();
+    })
   }
 
   get username(){
@@ -92,12 +102,6 @@ export class SignupPage implements OnInit {
       LiveInArea : [null, [Validators.required]]
       
     })
-
-
-
-
-
-
 
   ngOnInit() {
     console.log(this.SignUpForm.value);

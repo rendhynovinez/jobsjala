@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 import { AuthConstants } from '../config/auth-constants';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { ToastService } from '../services/toast.service';
+
 
 
 
@@ -21,19 +23,26 @@ export class LoginPage implements OnInit {
   }
 
   loginAction(){
-
+    this.presentLoading('Authenticating..');
     this.authService.login(this.LoginForm.value).subscribe((res:any)=>{
       if(res){
+        debugger
         this.storageService.store(AuthConstants.AUTH, res.success.token);
+        localStorage.setItem(AuthConstants.AUTH, res.success.token);
         this.router.navigate(['biodata']);
+        this.LoadingController.dismiss();
       }else{
         this.toastService.presentToast('kesalahan yang tak diduga');
+        this.LoadingController.dismiss();
       }
-    }),
-    (error, any) => {
-      this.toastService.presentToast('Connection Error');
-    }
+    }, async (error) => {
+      this.toastService.presentToast('wrong email and password, please enter correctly');
+      this.LoadingController.dismiss();
+  })
   }
+
+
+
   
   get email(){
      return this.LoginForm.get('email');
@@ -59,13 +68,23 @@ export class LoginPage implements OnInit {
      password : [null, [Validators.required]]
   })
 
+  async presentLoading(message :string) {
+    const loading = await this.LoadingController.create({
+      message
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }
 
 
   constructor(private formBuilder:FormBuilder,
   private router:Router,
   private authService:AuthService,
   private storageService: StorageService,
-  private toastService:ToastService) { }
+  private toastService:ToastService,
+  private LoadingController:LoadingController) { }
 
   ngOnInit() {
 

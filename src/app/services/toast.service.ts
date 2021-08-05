@@ -10,7 +10,7 @@ export class ToastService {
   constructor(public toastController: ToastController) { }
   async presentToast(infoMessage: string){
     const toast = await this.toastController.create({
-      message: 'Error Get Data, Try Again Later',
+      message: infoMessage,
       duration: 3000
 
     });

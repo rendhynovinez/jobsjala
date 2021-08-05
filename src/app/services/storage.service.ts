@@ -22,7 +22,6 @@ export class StorageService {
 
 
   async get(storageKey: string){
-    debugger
     await this.storage.create();
     const res = await this.storage.get(storageKey);
     if(res.value){
@@ -34,7 +33,6 @@ export class StorageService {
   }
 
   async getTokenKey(storageKey: string){
-    debugger
     await this.storage.create();
     const res = await this.storage.get(storageKey);
     return res;
@@ -55,11 +53,13 @@ export class StorageService {
   async removeItem(storageKey: string){
     await this.storage.create();
     await this.storage.remove(storageKey);
-
+    localStorage.clear();
   }
 
   async clear(){
     await this.storage.clear();
+    localStorage.clear();
+
   }
 
 

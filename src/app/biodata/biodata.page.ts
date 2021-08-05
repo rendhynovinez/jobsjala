@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Platform } from '@ionic/angular';
+import { LoadingController, Platform } from '@ionic/angular';
 import { AllserviceService } from '../allservice.service';
 import { AuthConstants } from '../config/auth-constants';
 import { StorageService } from '../services/storage.service';
 import { ToastService } from '../services/toast.service';
+
 
 
 
@@ -39,7 +40,23 @@ export class BiodataPage implements OnInit {
     private allserviceService: AllserviceService,
     private storageService:StorageService,
     private router:Router,
-    private toastService:ToastService) { }
+    private toastService:ToastService,
+    private LoadingController:LoadingController) { 
+      this.allserviceService
+      .Getdetailprofile()
+      .subscribe((res) => {
+        console.log(res);
+        debugger
+         if(res.data.length !== 0){
+          this.router.navigate(['list-job']);
+          this.LoadingController.dismiss();
+         }; 
+      }, async (error) => {
+        this.LoadingController.dismiss();
+        this.toastService.presentToast('Error Get Data');
+      });
+
+    }
   
   get fullname(){
       return this.BiodataForm.get('fullname');
@@ -153,7 +170,10 @@ export class BiodataPage implements OnInit {
   })
 
 
+
+
   GetDataEducation(){
+    this.presentLoading('Getting Data..');
     this.allserviceService
     .listeducation()
     .subscribe((res) => {
@@ -190,17 +210,21 @@ export class BiodataPage implements OnInit {
     .listetnic()
     .subscribe((res) => {
       this.listEtnics = res.data;
+      this.LoadingController.dismiss();
     }, async (error) => {
+      this.LoadingController.dismiss();
       this.toastService.presentToast('Error Get Data, Try Again Later');
     });
   }
 
 
   ngOnInit() {
+
     this.GetDataEducation();
     this.GetDatalistetnic();
     this.GetDatalistjobspecialist();
     this.GetDataliveinarea();
+
   }
   submit(){
     this.allserviceService
@@ -209,10 +233,21 @@ export class BiodataPage implements OnInit {
       this.ProfileCreate = res.data;
       this.router.navigate(['success-biodata']);
     }, async (error) => {
-        this.toastService.presentToast('Error Get Data, Try Again Later');
+        this.toastService.presentToast('Error Save Data, Try Again Later');
     });
 
     
+  }
+
+
+  async presentLoading(message :string) {
+    const loading = await this.LoadingController.create({
+      message
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
   

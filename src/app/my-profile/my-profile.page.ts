@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 import { AllserviceService } from '../allservice.service';
 import { StorageService } from '../services/storage.service';
 import { ToastService } from '../services/toast.service';
+
 
 
 @Component({
@@ -43,7 +45,8 @@ export class MyProfilePage implements OnInit {
     private storageService:StorageService,
     private router:Router,
     private toastService:ToastService,
-    private formBuilder:FormBuilder) { 
+    private formBuilder:FormBuilder,
+    private LoadingController:LoadingController) { 
     }
 
     MyProfileForm = this.formBuilder.group({
@@ -79,14 +82,13 @@ export class MyProfilePage implements OnInit {
         this.selectedJobSpecialist = parseInt(res.data[0].JobSpecialist);
         this.selectedEducation = parseInt(res.data[0].Education);
         this.selectedLiveInArea = parseInt(res.data[0].LiveInArea);
-        this.selectedetnics = parseInt(res.data[0].etnics);      
+        this.selectedetnics = parseInt(res.data[0].etnics);   
       }, async (error) => {
         this.toastService.presentToast('Error Get Data');
       });
     }
 
     compareObject(a: any, b: any) {
-      debugger
       return a.id === b.id;
    }
 
@@ -150,7 +152,6 @@ export class MyProfilePage implements OnInit {
     }
 
     submit(){
-      debugger
       console.log(this.MyProfileForm.value);
       this.allserviceService
       .updateBiodata(this.MyProfileForm.value)
@@ -160,6 +161,7 @@ export class MyProfilePage implements OnInit {
           this.toastService.presentToast('Error Get Data, Try Again Later');
       });
     }
+
   
 
 }

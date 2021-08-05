@@ -55,6 +55,10 @@ const routes: Routes = [
     path: 'my-job',
     loadChildren: () => import('./my-job/my-job.module').then( m => m.MyJobPageModule)
     ,canActivate:[BiodataGuard]
+  },
+  {
+    path: 'loading',
+    loadChildren: () => import('./loading/loading.module').then( m => m.LoadingPageModule)
   }
 ];
 

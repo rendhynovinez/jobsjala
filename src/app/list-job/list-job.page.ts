@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { AllserviceService } from '../allservice.service';
 import { DetailJobPage } from '../detail-job/detail-job.page';
 import { ToastService } from '../services/toast.service';
+
+
 
 
 
@@ -16,7 +18,8 @@ export class ListJobPage implements OnInit {
   public item:any = [];
   constructor(public navCtrl:NavController, 
     private allserviceService:AllserviceService,
-    private toastService:ToastService){
+    private toastService:ToastService,
+    private LoadingController:LoadingController){
 
   }
 
@@ -24,13 +27,15 @@ export class ListJobPage implements OnInit {
   current_job = this.jobList[0];
 
   GetDatajobList(){
+    this.presentLoading('Getting Data..');
     this.allserviceService
     .listjob()
     .subscribe((res) => {
       this.jobList = res.data;
+      this.LoadingController.dismiss();
     }, async (error) => {
-      const message = JSON.parse(await error.error.text()).message;
-      this.toastService.presentToast(message);
+      this.LoadingController.dismiss();
+      this.toastService.presentToast('Error Getting Data..');
     });
   }
 
@@ -43,6 +48,13 @@ export class ListJobPage implements OnInit {
   
   OpenDetail(item){
     this.navCtrl.navigateForward('detail-job', { state: item });
+  }
+
+  async presentLoading(message :string) {
+    const loading = await this.LoadingController.create({
+      message
+    });
+    await loading.present();
   }
 
 }

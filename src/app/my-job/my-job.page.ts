@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { AllserviceService } from '../allservice.service';
 import { ToastService } from '../services/toast.service';
+
 
 
 @Component({
@@ -15,21 +16,23 @@ export class MyJobPage implements OnInit {
   jobList = [];
   constructor(public navCtrl:NavController,
     private allserviceService:AllserviceService,
-    private toastService:ToastService){
+    private toastService:ToastService,
+    private LoadingController:LoadingController
+    ){
 
   }
 
   GetDataMyJob(){
-    debugger
+    this.presentLoading('Getting Data..');
     this.allserviceService
     .userhistoryjob()
     .subscribe((res) => {
-      debugger
       console.log(res);
       this.jobList = res.data;
+      this.LoadingController.dismiss();
     }, async (error) => {
-      const message = JSON.parse(await error.error.text()).message;
-      this.toastService.presentToast(message);
+      this.toastService.presentToast('error getting Data..');
+      this.LoadingController.dismiss();
     });
   }
 
@@ -42,7 +45,15 @@ export class MyJobPage implements OnInit {
     this.navCtrl.navigateForward('detail-job', { state: data });
   }
 
+  async presentLoading(message :string) {
+    const loading = await this.LoadingController.create({
+      message
+    });
+    await loading.present();
 
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }
 }
 
 

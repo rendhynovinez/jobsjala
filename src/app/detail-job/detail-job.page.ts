@@ -46,9 +46,11 @@ export class DetailJobPage implements OnInit {
   }
 
   cekData(params){
+    debugger
     this.allserviceService
     .detailJob(params)
     .subscribe((res) => {
+      debugger
       if(res.history_status == 1){
           this.condition = true;
       }else{

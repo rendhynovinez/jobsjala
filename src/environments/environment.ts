@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://jobsjala.biz.id/api/'
+  // apiUrl: 'http://jobsjala.biz.id/api/'
+  apiUrl: 'http://127.0.0.1:8000/api/'
 };
 
 /*

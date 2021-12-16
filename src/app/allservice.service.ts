@@ -54,6 +54,10 @@ export class AllserviceService {
     return this.httpService.get('listarea')
   }
 
+  listgroup():Observable<any>{
+    return this.httpService.get('listgroup')
+  }
+
   listjobspecialist():Observable<any>{
     return this.httpService.get('listjobspecialist')
   }

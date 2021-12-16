@@ -16,9 +16,12 @@ import { ToastService } from '../services/toast.service';
   styleUrls: ['./biodata.page.scss'],
 })
 export class BiodataPage implements OnInit {
+
+  selectedValue:Number = 27;
+  selectedText:string = "default";
   
-  listEducation = [];
-  current_educaton = this.listEducation[0];
+  // listEducation = [];
+  // current_educaton = this.listEducation[0];
 
 
   listEtnics = [];
@@ -28,9 +31,12 @@ export class BiodataPage implements OnInit {
   liveinarea = [];
   current_liveinarea = this.liveinarea[0]; 
 
+  list_group = [];
+  current_group = this.list_group[0]; 
 
-  listjobspecialist = [];
-  current_listjobspecialist = this.listjobspecialist[0]; 
+
+  // listjobspecialist = [];
+  // current_listjobspecialist = this.listjobspecialist[0]; 
 
   ProfileCreate = [];
 
@@ -45,8 +51,6 @@ export class BiodataPage implements OnInit {
       this.allserviceService
       .Getdetailprofile()
       .subscribe((res) => {
-        console.log(res);
-        debugger
          if(res.data.length !== 0){
           this.router.navigate(['list-job']);
           this.LoadingController.dismiss();
@@ -57,7 +61,9 @@ export class BiodataPage implements OnInit {
       });
 
     }
-  
+
+
+
   get fullname(){
       return this.BiodataForm.get('fullname');
   }
@@ -74,6 +80,10 @@ export class BiodataPage implements OnInit {
     return this.BiodataForm.get('gender');
   }
 
+  get driverlicense(){
+    return this.BiodataForm.get('driverlicense');
+  }
+
   get etnics(){
     return this.BiodataForm.get('etnics');
   }
@@ -87,17 +97,21 @@ export class BiodataPage implements OnInit {
     return this.BiodataForm.get('LiveInArea');
   }
 
-  get Organization(){
-    return this.BiodataForm.get('Organization')
+  get Group(){
+    return this.BiodataForm.get('Group');
   }
 
-  get Education(){
-    return this.BiodataForm.get('Education')
-  }
+  // get Organization(){
+  //   return this.BiodataForm.get('Organization')
+  // }
 
-  get JobSpecialist(){
-    return this.BiodataForm.get('JobSpecialist')
-  }
+  // get Education(){
+  //   return this.BiodataForm.get('Education')
+  // }
+
+  // get JobSpecialist(){
+  //   return this.BiodataForm.get('JobSpecialist')
+  // }
 
   get Skills(){
     return this.BiodataForm.get('Skills')
@@ -124,6 +138,10 @@ export class BiodataPage implements OnInit {
         {type : 'required', message: 'Input Is Required'}
       ],
 
+      driverlicense:[
+        {type : 'required', message: 'Input Is Required'}
+      ],
+
       etnics : [
         {type : 'required', message: 'Input Is Required'}
       ],
@@ -136,22 +154,27 @@ export class BiodataPage implements OnInit {
         {type : 'required', message: 'Input Is Required'}
       ],
 
-      Education : [
+      Group : [
         {type : 'required', message: 'Input Is Required'}
       ],
+
+
+      // Education : [
+      //   {type : 'required', message: 'Input Is Required'}
+      // ],
       
-      JobSpecialist : [
-        {type : 'required', message: 'Input Is Required'}
-      ],
+      // JobSpecialist : [
+      //   {type : 'required', message: 'Input Is Required'}
+      // ],
 
       Skills:[
         {type : 'required', message: 'Input Is Required'}
       ],
       
-      Organization : [
-        {type : 'required', message: 'Input Is Required'},
-        {type : 'maxlength', message: 'Name cant be longer then 200 characters'}
-      ],
+      // Organization : [
+      //   {type : 'required', message: 'Input Is Required'},
+      //   {type : 'maxlength', message: 'Name cant be longer then 200 characters'}
+      // ],
       
   }
 
@@ -160,28 +183,30 @@ export class BiodataPage implements OnInit {
     dateofbirth : [null,[Validators.required,Validators.maxLength(50) ]],
     phonenumber : [null,[Validators.required,Validators.maxLength(50)]],
     gender : [null,[Validators.required]],
+    driverlicense : [null,[Validators.required]],
     etnics : [null,[Validators.required]],
     address : [null,[Validators.required]],
-    Education: [null, [Validators.required]],
-    JobSpecialist: [null, [Validators.required]],
+    // Education: [null, [Validators.required]],
+    //JobSpecialist: [null, [Validators.required]],
     Skills: [null, [Validators.required]],
     LiveInArea: [null, [Validators.required]],
-    Organization : [null,[Validators.required,Validators.maxLength(200) ]]
+    Group: [null, [Validators.required]]
+    // Organization : [null,[Validators.required,Validators.maxLength(200) ]]
   })
 
 
 
 
-  GetDataEducation(){
-    this.presentLoading('Getting Data..');
-    this.allserviceService
-    .listeducation()
-    .subscribe((res) => {
-      this.listEducation = res.data;
-    }, async (error) => {
-      this.toastService.presentToast('Error Get Data, Try Again Later');
-    });
-  }
+  // GetDataEducation(){
+  //   this.presentLoading('Getting Data..');
+  //   this.allserviceService
+  //   .listeducation()
+  //   .subscribe((res) => {
+  //     this.listEducation = res.data;
+  //   }, async (error) => {
+  //     this.toastService.presentToast('Error Get Data, Try Again Later');
+  //   });
+  // }
 
   GetDataliveinarea(){
     this.allserviceService
@@ -193,16 +218,28 @@ export class BiodataPage implements OnInit {
     });
   }
 
-
-  GetDatalistjobspecialist(){
+  GetDatalistgroup(){
+    debugger
     this.allserviceService
-    .listjobspecialist()
+    .listgroup()
     .subscribe((res) => {
-      this.listjobspecialist = res.data;
+      debugger
+      this.list_group = res.data;
     }, async (error) => {
       this.toastService.presentToast('Error Get Data, Try Again Later');
     });
   }
+
+
+  // GetDatalistjobspecialist(){
+  //   this.allserviceService
+  //   .listjobspecialist()
+  //   .subscribe((res) => {
+  //     this.listjobspecialist = res.data;
+  //   }, async (error) => {
+  //     this.toastService.presentToast('Error Get Data, Try Again Later');
+  //   });
+  // }
 
 
   GetDatalistetnic(){
@@ -217,13 +254,22 @@ export class BiodataPage implements OnInit {
     });
   }
 
+    // 
+    OnChange(event){
+      debugger
+     alert('you have selected data'+event.target.value);
+   }
+   
+
 
   ngOnInit() {
 
-    this.GetDataEducation();
+   // this.GetDataEducation();
     this.GetDatalistetnic();
-    this.GetDatalistjobspecialist();
+    //this.GetDatalistjobspecialist();
     this.GetDataliveinarea();
+    this.GetDatalistgroup();
+
 
   }
   submit(){

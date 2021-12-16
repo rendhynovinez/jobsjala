@@ -1,0 +1,92 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/login">Log In</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="header">
+      <h1>Create your <br />Group</h1>
+  </div>
+  <form id="form" [formGroup] = "ReggroupForm" (ngSubmit) = "submit()">
+    <input type="hidden" id="is_group" name="is_group" ng-value="1"/> 
+
+    <ion-item class="ion-margin-bottom">
+        <ion-input formControlName="username" inputmode="text" placeholder="Username"></ion-input>
+        <div *ngFor="let error of errorMessages.username">
+          <ng-container *ngIf="username.hasError(error.type) && (username.dirty || username.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+    </ion-item>
+
+      <ion-input formControlName="is_group" inputmode="number" type="hidden" value="1"></ion-input>
+
+    <ion-item class="ion-margin-bottom">
+      <ion-input formControlName="number_phone" inputmode="number" type="number" placeholder="Number Phone"></ion-input>
+      <div *ngFor="let error of errorMessages.number_phone">
+        <ng-container *ngIf="number_phone.hasError(error.type) && (number_phone.dirty || number_phone.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+   </ion-item>
+    <ion-item class="ion-margin-bottom">
+      <ion-input formControlName="email" placeholder="email" type="email" formControlName="email"></ion-input>
+      <div *ngFor="let error of errorMessages.email">
+        <ng-container *ngIf="email.hasError(error.type) && (email.dirty || email.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+  </ion-item>
+  <ion-item class="ion-margin-bottom">
+    <ion-input formControlName="password" type="password" placeholder="password"></ion-input>
+    <div *ngFor="let error of errorMessages.password">
+      <ng-container *ngIf="password.hasError(error.type) && (password.dirty || password.touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+  </ion-item>
+  <ion-item class="ion-margin-bottom">
+    <ion-input formControlName="password_confirmation" type="password" placeholder="password confirmation"></ion-input>
+    <div *ngFor="let error of errorMessages.password_confirmation">
+      <ng-container *ngIf="password_confirmation.hasError(error.type) && (password_confirmation.dirty || password_confirmation.touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+  </ion-item>
+  <ion-item class="ion-margin-bottom">
+      <ion-label>Live In Area</ion-label>
+      <ion-select formControlName="LiveInArea" value="Center City" ok-text="Ok" cancel-text="Cancel">
+        <ion-select-option value="Center City">Center City</ion-select-option>
+        <ion-select-option value="South Philadelphia">South Philadelphia</ion-select-option>
+        <ion-select-option value="Southwest Philadelphia">Southwest Philadelphia</ion-select-option>
+        <ion-select-option value="West Philadelphia">West Philadelphia</ion-select-option>
+        <ion-select-option value="Lower North Philadelphia">Lower North Philadelphia</ion-select-option>
+        <ion-select-option value="Upper North Philadelphia">Upper North Philadelphia</ion-select-option>
+        <ion-select-option value="Bridesburge-Kensington-Port Richmond">Bridesburge-Kensington-Port Richmond</ion-select-option>
+        <ion-select-option value="Roxborough-Manayunk">Roxborough-Manayunk</ion-select-option>
+        <ion-select-option value="Germantown-Chestnut Hill">Germantown-Chestnut Hill</ion-select-option>
+        <ion-select-option value="Olney-Oak Lane">Olney-Oak Lane</ion-select-option>
+        <ion-select-option value="Near Northeast Philadelphia">Near Northeast Philadelphia</ion-select-option>
+        <ion-select-option value="Far Northeast Philadelphia">Far Northeast Philadelphia</ion-select-option>
+      </ion-select>
+      <div *ngFor="let error of errorMessages.LiveInArea">
+        <ng-container *ngIf="LiveInArea.hasError(error.type) && (LiveInArea.dirty || LiveInArea.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+  </ion-item>
+        <ion-button type="submit"(click)="signupAction()" [disabled] ="!ReggroupForm.valid" [color]="!ReggroupForm.valid? 'medium' : 'primary'"  expand="block" shape="round">
+        Create
+      </ion-button>
+  </form>
+  <p>By pressing the 'Register' button you have joined our application.</p>
+
+</ion-content>

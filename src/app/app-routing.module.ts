@@ -22,6 +22,10 @@ const routes: Routes = [
     loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
   },
   {
+    path: 'reggroup',
+    loadChildren: () => import('./reggroup/reggroup.module').then( m => m.ReggroupPageModule)
+  },
+  {
     path: 'biodata',
     loadChildren: () => import('./biodata/biodata.module').then( m => m.BiodataPageModule),
     canActivate:[BiodataGuard]
@@ -59,7 +63,12 @@ const routes: Routes = [
   {
     path: 'loading',
     loadChildren: () => import('./loading/loading.module').then( m => m.LoadingPageModule)
+  },
+  {
+    path: 'reggroup',
+    loadChildren: () => import('./reggroup/reggroup.module').then( m => m.ReggroupPageModule)
   }
+
 ];
 
 @NgModule({

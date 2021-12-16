@@ -49,6 +49,19 @@
       </div>
     </ion-item>
 
+    <ion-item  class="ion-margin-bottom">
+      <ion-label>Driver License</ion-label>
+      <ion-select formControlName="driverlicense" ok-text="Ok" cancel-text="Cancel">
+        <ion-select-option value="1">Yes</ion-select-option>
+        <ion-select-option value="2">No</ion-select-option>
+      </ion-select>
+      <div *ngFor="let error of errorMessages.gender">
+        <ng-container *ngIf="gender.hasError(error.type) && (gender.dirty || gender.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+    </ion-item>
+
     <ion-item class="ion-margin-bottom">
       <ion-input formControlName="phonenumber" type="number" placeholder="Phone Number"></ion-input>
       <div *ngFor="let error of errorMessages.phonenumber">
@@ -69,6 +82,20 @@
         </ng-container>
       </div>
     </ion-item >
+
+    <ion-item class="ion-margin-bottom">
+      <ion-label>Group</ion-label>
+      <ion-select formControlName="Group" [(ngModel)]="selectedValue" (ionChange)="OnChange($event)" [selectedText]="selectedText">
+        <ion-select-option [(value)]="itemGroup.id" *ngFor="let itemGroup of list_group" >{{itemGroup.username}}</ion-select-option>
+      </ion-select>
+      <div *ngFor="let error of errorMessages.Group">
+        <ng-container *ngIf="Group.hasError(error.type) && (Group.dirty || Group.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+    </ion-item >
+
+
      <ion-item>
       <ion-textarea formControlName="address" rows="3" cols="20" placeholder="Address"></ion-textarea>
       <div *ngFor="let error of errorMessages.address">
@@ -88,7 +115,7 @@
         </ng-container>
       </div>
     </ion-item>
-    <ion-item>
+    <!-- <ion-item>
       <ion-label>Education</ion-label>
       <ion-select formControlName="Education" ok-text="Ok" cancel-text="Cancel">
         <ion-select-option [(value)]="itemEdu.id" *ngFor="let itemEdu of listEducation">{{itemEdu.name}}</ion-select-option>
@@ -98,16 +125,16 @@
           <small class="error-message">{{error.message}}</small>
         </ng-container>
       </div>
-    </ion-item>
-    <ion-item class="ion-margin-bottom">
+    </ion-item> -->
+    <!-- <ion-item class="ion-margin-bottom">
       <ion-input formControlName="Organization" inputmode="text" placeholder="Organization"></ion-input>
       <div *ngFor="let error of errorMessages.Organization">
         <ng-container *ngIf="Organization.hasError(error.type) && (Organization.dirty || Organization.touched)">
           <small class="error-message">{{error.message}}</small>
         </ng-container>
       </div>
-    </ion-item>
-    <ion-item class="ion-margin-bottom">
+    </ion-item> -->
+    <!-- <ion-item class="ion-margin-bottom">
       <ion-label>Your Job Specialist</ion-label>
       <ion-select formControlName="JobSpecialist" ok-text="Ok" cancel-text="Cancel">
         <ion-select-option [(value)]="itemJobSpecialist.id" *ngFor="let itemJobSpecialist of listjobspecialist">{{itemJobSpecialist.name}}</ion-select-option>
@@ -117,15 +144,7 @@
           <small class="error-message">{{error.message}}</small>
         </ng-container>
       </div>
-    </ion-item>
-
-    <!-- <ion-item>
-     <ion-label>Attach Your CV</ion-label>
-     </ion-item>
-      <ion-item class="ion-margin-bottom">
-     
-        <ion-input  type="file"></ion-input>
-      </ion-item> -->
+    </ion-item> -->
       <ion-item>
         <ion-textarea formControlName="Skills" rows="6" cols="20" placeholder="Skills"></ion-textarea>
         <div *ngFor="let error of errorMessages.Skills">

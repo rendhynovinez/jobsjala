@@ -21,13 +21,8 @@ export class MyProfilePage implements OnInit {
   genders = [{"id" : 1,"name":"Male"},{"id" : 2,"name":"Female"}]
 
   selectedGender:Number;
-  selectedJobSpecialist:Number;
-  selectedEducation:Number;
   selectedLiveInArea:Number;
   selectedetnics:Number;
-
-  listEducation = [];
-  current_educaton = this.listEducation[0];
 
   listEtnics = [];
   current_etnics = this.listEtnics[0]; 
@@ -35,11 +30,6 @@ export class MyProfilePage implements OnInit {
 
   liveinarea = [];
   current_liveinarea = this.liveinarea[0]; 
-
-
-  listjobspecialist = [];
-  current_listjobspecialist = this.listjobspecialist[0]; 
-
 
   constructor(  private allserviceService: AllserviceService,
     private storageService:StorageService,
@@ -51,17 +41,14 @@ export class MyProfilePage implements OnInit {
 
     MyProfileForm = this.formBuilder.group({
       id:[],
-      fullname : [null,[Validators.required,Validators.maxLength(50),Validators.pattern('^[A-Za-z -]+$')] ],
-      dateofbirth : [null,[Validators.required,Validators.maxLength(50) ]],
-      phonenumber : [null,[Validators.required,Validators.maxLength(50)]],
-      gender : [null,[Validators.required]],
-      etnics : [null,[Validators.required]],
-      address : [null,[Validators.required]],
-      Education: [null, [Validators.required]],
-      JobSpecialist: [null, [Validators.required]],
-      Skills: [null, [Validators.required]],
-      LiveInArea: [null, [Validators.required]],
-      Organization : [null,[Validators.required,Validators.maxLength(200) ]]
+      fullname : [null],
+      dateofbirth : [null],
+      phonenumber : [null],
+      gender : [null],
+      etnics :[null],
+      address : [null],
+      Skills: [null],
+      LiveInArea: [null],
     });
 
 
@@ -72,15 +59,12 @@ export class MyProfilePage implements OnInit {
         console.log(res);
         this.userData['id'] = res.data[0].id;
         this.userData['phonenumber'] = res.data[0].phonenumber;
-        this.userData['Organization'] = res.data[0].Organization;
         this.userData['Skills'] = res.data[0].Skills;
         this.userData['address']  = res.data[0].address;
         this.userData['customer_id'] = res.data[0].customer_id;
         this.userData['dateofbirth'] = res.data[0].dateofbirth;
         this.userData['fullname'] = res.data[0].fullname;
         this.selectedGender = parseInt(res.data[0].gender);
-        this.selectedJobSpecialist = parseInt(res.data[0].JobSpecialist);
-        this.selectedEducation = parseInt(res.data[0].Education);
         this.selectedLiveInArea = parseInt(res.data[0].LiveInArea);
         this.selectedetnics = parseInt(res.data[0].etnics);   
       }, async (error) => {
@@ -93,35 +77,11 @@ export class MyProfilePage implements OnInit {
    }
 
   
-
-    GetDataEducation(){
-      this.allserviceService
-      .listeducation()
-      .subscribe((res) => {
-        this.listEducation = res.data;
-      }, async (error) => {
-        const message = JSON.parse(await error.error.text()).message;
-        this.toastService.presentToast(message);
-      });
-    }
-  
     GetDataliveinarea(){
       this.allserviceService
       .liveinarea()
       .subscribe((res) => {
         this.liveinarea = res.data;
-      }, async (error) => {
-        const message = JSON.parse(await error.error.text()).message;
-        this.toastService.presentToast(message);
-      });
-    }
-  
-  
-    GetDatalistjobspecialist(){
-      this.allserviceService
-      .listjobspecialist()
-      .subscribe((res) => {
-        this.listjobspecialist = res.data;
       }, async (error) => {
         const message = JSON.parse(await error.error.text()).message;
         this.toastService.presentToast(message);
@@ -142,13 +102,9 @@ export class MyProfilePage implements OnInit {
   
   
     ngOnInit() {
-     
-      this.GetDataEducation();
       this.GetDatalistetnic();
-      this.GetDatalistjobspecialist();
       this.GetDataliveinarea();
       this.GetdetailProfile();
-   
     }
 
     submit(){
@@ -161,7 +117,5 @@ export class MyProfilePage implements OnInit {
           this.toastService.presentToast('Error Get Data, Try Again Later');
       });
     }
-
-  
 
 }

@@ -7,9 +7,6 @@ import { AuthConstants } from '../config/auth-constants';
 import { StorageService } from '../services/storage.service';
 import { ToastService } from '../services/toast.service';
 
-
-
-
 @Component({
   selector: 'app-biodata',
   templateUrl: './biodata.page.html',
@@ -17,16 +14,11 @@ import { ToastService } from '../services/toast.service';
 })
 export class BiodataPage implements OnInit {
 
-  selectedValue:Number = 27;
+  selectedValue:Number = 1;
   selectedText:string = "default";
-  
-  // listEducation = [];
-  // current_educaton = this.listEducation[0];
-
 
   listEtnics = [];
   current_etnics = this.listEtnics[0]; 
-
 
   liveinarea = [];
   current_liveinarea = this.liveinarea[0]; 
@@ -34,13 +26,7 @@ export class BiodataPage implements OnInit {
   list_group = [];
   current_group = this.list_group[0]; 
 
-
-  // listjobspecialist = [];
-  // current_listjobspecialist = this.listjobspecialist[0]; 
-
   ProfileCreate = [];
-
-
 
   constructor(private formBuilder:FormBuilder, private platform:Platform,
     private allserviceService: AllserviceService,
@@ -101,18 +87,6 @@ export class BiodataPage implements OnInit {
     return this.BiodataForm.get('Group');
   }
 
-  // get Organization(){
-  //   return this.BiodataForm.get('Organization')
-  // }
-
-  // get Education(){
-  //   return this.BiodataForm.get('Education')
-  // }
-
-  // get JobSpecialist(){
-  //   return this.BiodataForm.get('JobSpecialist')
-  // }
-
   get Skills(){
     return this.BiodataForm.get('Skills')
   }
@@ -158,24 +132,10 @@ export class BiodataPage implements OnInit {
         {type : 'required', message: 'Input Is Required'}
       ],
 
-
-      // Education : [
-      //   {type : 'required', message: 'Input Is Required'}
-      // ],
-      
-      // JobSpecialist : [
-      //   {type : 'required', message: 'Input Is Required'}
-      // ],
-
       Skills:[
         {type : 'required', message: 'Input Is Required'}
       ],
-      
-      // Organization : [
-      //   {type : 'required', message: 'Input Is Required'},
-      //   {type : 'maxlength', message: 'Name cant be longer then 200 characters'}
-      // ],
-      
+       
   }
 
   BiodataForm = this.formBuilder.group({
@@ -186,29 +146,14 @@ export class BiodataPage implements OnInit {
     driverlicense : [null,[Validators.required]],
     etnics : [null,[Validators.required]],
     address : [null,[Validators.required]],
-    // Education: [null, [Validators.required]],
-    //JobSpecialist: [null, [Validators.required]],
     Skills: [null, [Validators.required]],
     LiveInArea: [null, [Validators.required]],
     Group: [null, [Validators.required]]
-    // Organization : [null,[Validators.required,Validators.maxLength(200) ]]
   })
 
 
-
-
-  // GetDataEducation(){
-  //   this.presentLoading('Getting Data..');
-  //   this.allserviceService
-  //   .listeducation()
-  //   .subscribe((res) => {
-  //     this.listEducation = res.data;
-  //   }, async (error) => {
-  //     this.toastService.presentToast('Error Get Data, Try Again Later');
-  //   });
-  // }
-
   GetDataliveinarea(){
+    this.presentLoading('Getting Data..');
     this.allserviceService
     .liveinarea()
     .subscribe((res) => {
@@ -219,27 +164,14 @@ export class BiodataPage implements OnInit {
   }
 
   GetDatalistgroup(){
-    debugger
     this.allserviceService
     .listgroup()
     .subscribe((res) => {
-      debugger
       this.list_group = res.data;
     }, async (error) => {
       this.toastService.presentToast('Error Get Data, Try Again Later');
     });
   }
-
-
-  // GetDatalistjobspecialist(){
-  //   this.allserviceService
-  //   .listjobspecialist()
-  //   .subscribe((res) => {
-  //     this.listjobspecialist = res.data;
-  //   }, async (error) => {
-  //     this.toastService.presentToast('Error Get Data, Try Again Later');
-  //   });
-  // }
 
 
   GetDatalistetnic(){
@@ -254,7 +186,6 @@ export class BiodataPage implements OnInit {
     });
   }
 
-    // 
     OnChange(event){
       debugger
      alert('you have selected data'+event.target.value);
@@ -263,10 +194,7 @@ export class BiodataPage implements OnInit {
 
 
   ngOnInit() {
-
-   // this.GetDataEducation();
     this.GetDatalistetnic();
-    //this.GetDatalistjobspecialist();
     this.GetDataliveinarea();
     this.GetDatalistgroup();
 
@@ -281,8 +209,6 @@ export class BiodataPage implements OnInit {
     }, async (error) => {
         this.toastService.presentToast('Error Save Data, Try Again Later');
     });
-
-    
   }
 
 
@@ -291,7 +217,6 @@ export class BiodataPage implements OnInit {
       message
     });
     await loading.present();
-
     const { role, data } = await loading.onDidDismiss();
     console.log('Loading dismissed!');
   }

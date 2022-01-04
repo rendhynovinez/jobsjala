@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 import { AllserviceService } from '../allservice.service';
 import { ToastService } from '../services/toast.service';
+
 Router
 
 @Component({
@@ -24,7 +26,8 @@ export class DetailJobPage implements OnInit {
     data:any;
     condition:Boolean;
 
-  constructor(public router: Router, private allserviceService: AllserviceService,
+  constructor(public router: Router, private allserviceService: AllserviceService, 
+    private LoadingController:LoadingController,
     private toastService:ToastService){
       // Passing Paramter Data Job
       if (router.getCurrentNavigation().extras.state) {
@@ -47,14 +50,17 @@ export class DetailJobPage implements OnInit {
 
   cekData(params){
     debugger
+    this.presentLoading('Getting Data..');
     this.allserviceService
     .detailJob(params)
     .subscribe((res) => {
       debugger
       if(res.history_status == 1){
           this.condition = true;
+          this.LoadingController.dismiss();
       }else{
         this.condition = false;
+        this.LoadingController.dismiss();
       }
     }, async (error) => {
         this.toastService.presentToast('Error Get Data, Try Again Later');
@@ -66,9 +72,21 @@ export class DetailJobPage implements OnInit {
       .applyjob({'jobs_id' : this.data.job_id})
       .subscribe((res) => {
         this.router.navigate(['success-apply-job']);
+   
       }, async (error) => {
           this.toastService.presentToast('Error Get Data, Try Again Later');
+
       });
+    }
+
+    async presentLoading(message :string) {
+      const loading = await this.LoadingController.create({
+        message
+      });
+      await loading.present();
+  
+      const { role, data } = await loading.onDidDismiss();
+      console.log('Loading dismissed!');
     }
 
     ngOnInit() {

@@ -3,9 +3,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, Platform } from '@ionic/angular';
 import { AllserviceService } from '../allservice.service';
-import { AuthConstants } from '../config/auth-constants';
+import { FCMConstants } from '../config/fcm-constants';
 import { StorageService } from '../services/storage.service';
 import { ToastService } from '../services/toast.service';
+
 
 @Component({
   selector: 'app-biodata',
@@ -15,7 +16,6 @@ import { ToastService } from '../services/toast.service';
 export class BiodataPage implements OnInit {
 
   selectedValue:Number = 1;
-  selectedText:string = "default";
 
   listEtnics = [];
   current_etnics = this.listEtnics[0]; 
@@ -148,7 +148,8 @@ export class BiodataPage implements OnInit {
     address : [null,[Validators.required]],
     Skills: [null, [Validators.required]],
     LiveInArea: [null, [Validators.required]],
-    Group: [null, [Validators.required]]
+    Group: [null, [Validators.required]],
+    fcmToken: [localStorage.getItem(FCMConstants.FCM)]
   })
 
 
@@ -186,12 +187,6 @@ export class BiodataPage implements OnInit {
     });
   }
 
-    OnChange(event){
-      debugger
-     alert('you have selected data'+event.target.value);
-   }
-   
-
 
   ngOnInit() {
     this.GetDatalistetnic();
@@ -201,14 +196,15 @@ export class BiodataPage implements OnInit {
 
   }
   submit(){
-    this.allserviceService
-    .profilecreate(this.BiodataForm.value)
+    debugger
+   // this.BiodataForm.value;
+    this.allserviceService.profilecreate(this.BiodataForm.value)
     .subscribe((res) => {
-      this.ProfileCreate = res.data;
-      this.router.navigate(['success-biodata']);
-    }, async (error) => {
-        this.toastService.presentToast('Error Save Data, Try Again Later');
-    });
+       this.ProfileCreate = res.data;
+        this.router.navigate(['success-biodata']);
+     }, async (error) => {
+         this.toastService.presentToast('Error Save Data, Try Again Later');
+      });
   }
 
 

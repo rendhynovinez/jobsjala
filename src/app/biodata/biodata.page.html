@@ -85,7 +85,7 @@
 
     <ion-item class="ion-margin-bottom">
       <ion-label>Group</ion-label>
-      <ion-select formControlName="Group" [(ngModel)]="selectedValue" (ionChange)="OnChange($event)" [selectedText]="selectedText">
+      <ion-select formControlName="Group" [(ngModel)]="selectedValue" (ionChange)="OnChange($event)" >
         <ion-select-option [(value)]="itemGroup.id" *ngFor="let itemGroup of list_group" >{{itemGroup.username}}</ion-select-option>
       </ion-select>
       <div *ngFor="let error of errorMessages.Group">

@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
+import { FirebaseX } from "@ionic-native/firebase-x/ngx";
+
 
 
 
@@ -15,7 +17,7 @@ import { Storage } from '@ionic/storage';
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
-  providers: [Storage,HttpClientModule,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [FirebaseX,Storage,HttpClientModule,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

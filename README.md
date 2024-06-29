@@ -58,22 +58,6 @@ Jobsjala adalah aplikasi mobile jobseeker yang memungkinkan pengguna untuk menca
     npx react-native run-ios
     ```
 
-## Struktur Proyek
-
-```plaintext
-.
-├── android                     # Proyek Android
-├── ios                         # Proyek iOS
-├── src                         # Sumber kode aplikasi
-│   ├── components              # Komponen UI
-│   ├── screens                 # Layar aplikasi
-│   ├── navigation              # Navigasi aplikasi
-│   ├── services                # Layanan API
-│   ├── utils                   # Utilitas umum
-│   └── App.js                  # Root komponen
-├── assets                      # Aset (gambar, ikon, dll.)
-├── package.json                # Konfigurasi npm
-└── README.md                   # Dokumentasi proyek
 ```
 
 ## Penggunaan

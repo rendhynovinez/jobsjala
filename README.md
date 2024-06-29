@@ -92,6 +92,4 @@ Kontribusi sangat diterima! Silakan fork repository ini dan ajukan pull request 
 4. Push ke branch tersebut: `git push origin fitur-anda`.
 5. Buat pull request.
 
-## Lisensi
 
-Proyek ini dilisensikan di bawah lisensi MIT. Lihat file [LICENSE](LICENSE) untuk informasi lebih lanjut.
